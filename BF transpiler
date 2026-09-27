@@ -1,0 +1,35 @@
+bf_code = input("enter da brainfuck code pls ")
+
+outputCode = ["memory = [0] * 30000 ", "ptr = 0", "import sys"]
+indentLevel = 0
+
+for char in bf_code:
+    
+    spacing = "  " * indentLevel
+    
+    if char == "+":
+        outputCode.append(f"{spacing}memory[ptr] += 1")
+    
+    elif char == "-":
+        outputCode.append(f"{spacing}memory[ptr] -= 1")
+    
+    elif char == ">":
+        outputCode.append(f"{spacing}ptr += 1")
+
+    elif char == "<":
+        outputCode.append(f"{spacing}ptr = max(0,ptr-1)")
+    
+    elif char == ".":
+        outputCode.append(f"{spacing}sys.stdout.write(chr(memory[ptr]))")
+        
+    elif char == "[":
+        outputCode.append(f"{spacing}while memory[ptr] != 0:")
+        
+        indentLevel = indentLevel + 1
+        
+    elif char == "]":
+        indentLevel = indentLevel - 1
+        
+finalCode = "\n".join(outputCode)
+print(finalCode)
+exec(finalCode)
